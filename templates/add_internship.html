@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Internship</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+<div class="container">
+    <div class="project-header">
+        <h1>Student Internship Tracker</h1>
+        <p>Internship Management System</p>
+    </div>
+    <form action="/add_internship" method="POST">
+        <h2>Add Internship</h2>
+
+        <label>Company Name:</label>
+        <input type="text" name="company" required>
+
+        <label>Role:</label>
+        <input type="text" name="role" required>
+
+        <label>Start Date:</label>
+        <input type="date" name="start_date">
+
+        <label>End Date:</label>
+        <input type="date" name="end_date">
+
+        <label>Status:</label>
+        <select name="status">
+            <option value="Applied">Applied</option>
+            <option value="Selected">Selected</option>
+            <option value="Ongoing">Ongoing</option>
+            <option value="Completed">Completed</option>
+            <option value="Rejected">Rejected</option>
+        </select>
+
+        <button type="submit" style="margin-top: 20px;">Submit</button>
+    </form>
+</div>
+</body>
+</html>
