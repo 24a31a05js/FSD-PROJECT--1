@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin - All Internships</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<div class="container">
+    <div class="project-header">
+        <h1>Student Internship Tracker</h1>
+        <p>Internship Management System</p>
+    </div>
+    <h2>Admin Panel</h2>
+
+    <div class="header-bar">
+        <p>Viewing All Internships</p>
+        <div>
+            <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">Dashboard</a>
+            <a href="{{ url_for('admin_internships') }}" class="btn btn-secondary">Internships</a>
+            <a href="{{ url_for('experiences') }}" class="btn">Experiences</a>
+            <a href="{{ url_for('admin_logout') }}" class="btn btn-danger" onclick="return confirm('Are you sure you want to logout?');">Logout</a>
+        </div>
+    </div>
+
+    <h3>All Student Internships</h3>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Name</th>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for internship in internships %}
+                <tr>
+                    <td><strong>{{ internship.student_name }}</strong></td>
+                    <td>{{ internship.company_name }}</td>
+                    <td>{{ internship.role }}</td>
+                    <td>{{ internship.start_date or 'N/A' }}</td>
+                    <td>{{ internship.end_date or 'N/A' }}</td>
+                    <td>
+                        <form action="{{ url_for('admin_update_status', internship_id=internship.id) }}" method="POST" style="display: flex; gap: 5px; align-items: center; margin: 0;">
+                            <select name="status" style="padding: 5px; margin: 0; width: auto; font-size: 0.85rem;">
+                                <option value="Applied" {% if internship.status == 'Applied' %}selected{% endif %}>Applied</option>
+                                <option value="Selected" {% if internship.status == 'Selected' %}selected{% endif %}>Selected</option>
+                                <option value="Ongoing" {% if internship.status == 'Ongoing' %}selected{% endif %}>Ongoing</option>
+                                <option value="Completed" {% if internship.status == 'Completed' %}selected{% endif %}>Completed</option>
+                                <option value="Rejected" {% if internship.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                            </select>
+                            <button type="submit" class="btn" style="padding: 5px 10px; font-size: 0.8rem; width: auto;">Update</button>
+                        </form>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6" style="text-align: center;">No internships found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
